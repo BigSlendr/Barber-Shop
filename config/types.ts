@@ -13,6 +13,13 @@ export type BrandColors = {
   muted: string;
 };
 
+export type ThemeTokens = {
+  colors: BrandColors;
+  effects: {
+    cardShadow: string;
+  };
+};
+
 export type ShopHours = {
   day: string;
   open: string;
@@ -55,6 +62,21 @@ export type BookingSettings = {
   timezone: string;
 };
 
+export type ContentLabels = {
+  heroDescription: string;
+  primaryCtaLabel: string;
+  secondaryCtaLabel: string;
+  mobileCtaLabel: string;
+  callCtaLabel: string;
+};
+
+export type AssetPlaceholders = {
+  logo: string;
+  heroPhoto: string;
+  galleryPhotosDir: string;
+  barberHeadshotsDir: string;
+};
+
 export type ShopConfig = {
   slug: string;
   shopName: string;
@@ -76,4 +98,13 @@ export type ShopConfig = {
   faqs: { question: string; answer: string }[];
   gallery: string[];
   booking: BookingSettings;
+  content: ContentLabels;
+};
+
+export type ShopTemplateConfig = {
+  shop: ShopConfig;
+  themeTokens: ThemeTokens;
+  seedDatasetId: string;
+  assets: AssetPlaceholders;
+  rebrandChecklist: string[];
 };

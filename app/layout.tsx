@@ -1,6 +1,7 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
-import { activeShop } from "@/config/shops";
+import { activeShop, masterShopConfig } from "@/config/shops";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { MobileStickyCTA } from "@/components/ui/MobileStickyCTA";
@@ -19,7 +20,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{
+          "--brand-background": masterShopConfig.themeTokens.colors.background,
+          "--brand-surface": masterShopConfig.themeTokens.colors.surface,
+          "--brand-text": masterShopConfig.themeTokens.colors.text,
+          "--brand-accent": masterShopConfig.themeTokens.colors.accent,
+          "--brand-muted": masterShopConfig.themeTokens.colors.muted,
+          "--brand-shadow-card": masterShopConfig.themeTokens.effects.cardShadow
+        } as CSSProperties}>
         <script
           type="application/ld+json"
           suppressHydrationWarning

@@ -25,7 +25,7 @@ export function Navbar() {
           ))}
         </div>
         <a href={`tel:${activeShop.phone}`} className="rounded-full bg-brand-accent px-4 py-2 text-sm font-semibold text-black">
-          Call
+          {activeShop.content.callCtaLabel}
         </a>
       </nav>
     </header>

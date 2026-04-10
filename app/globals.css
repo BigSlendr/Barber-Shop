@@ -8,6 +8,7 @@
   --brand-text: #f3f4f6;
   --brand-accent: #d4af37;
   --brand-muted: #a1a1aa;
+  --brand-shadow-card: 0 12px 30px rgba(0,0,0,0.25);
 }
 
 body {
