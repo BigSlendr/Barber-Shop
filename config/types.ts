@@ -36,6 +36,15 @@ export type ServiceItem = {
   featured?: boolean;
 };
 
+/**
+ * BarberProfile — represents a single barber on the team.
+ *
+ * Extended fields:
+ *   - instagram: full Instagram profile URL (e.g. "https://instagram.com/barber_handle")
+ *   - tiktok: full TikTok profile URL (optional)
+ *   - phone: barber's mobile number in E.164 format for SMS notifications (e.g. "+13471234567")
+ *   - portfolio: array of image paths showcasing the barber's work (shown on their profile page)
+ */
 export type BarberProfile = {
   id: string;
   slug: string;
@@ -45,6 +54,22 @@ export type BarberProfile = {
   specialties: string[];
   image: string;
   yearsExperience: number;
+  /** Full Instagram profile URL — shown as a link on the barber profile page */
+  instagram?: string;
+  /** Full TikTok profile URL — optional social link */
+  tiktok?: string;
+  /**
+   * Barber's mobile number in E.164 format (e.g. "+13471234567").
+   * Used by the booking API to send an SMS notification via Twilio when a
+   * customer books with this barber. Leave undefined to skip SMS for this barber.
+   */
+  phone?: string;
+  /**
+   * Array of image paths (relative to /public) showcasing the barber's work.
+   * Displayed as a portfolio grid on the barber's individual profile page.
+   * Example: ["/assets/portfolio/barber-1-work-01.jpg", ...]
+   */
+  portfolio?: string[];
 };
 
 export type Review = {
@@ -77,6 +102,36 @@ export type AssetPlaceholders = {
   barberHeadshotsDir: string;
 };
 
+/**
+ * NotificationConfig — controls SMS and email notifications sent on booking.
+ *
+ * SMS (Twilio): texts the individual barber when a customer books with them.
+ * Email (Resend): sends HTML confirmation emails to both the customer and the barber.
+ *
+ * All fields are optional — if left undefined the booking API will skip that
+ * notification channel gracefully without throwing errors.
+ */
+export type NotificationConfig = {
+  /**
+   * Twilio configuration for SMS notifications to barbers.
+   * Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_FROM_NUMBER in .env.local
+   */
+  twilio?: {
+    /** Twilio phone number to send FROM (E.164 format, e.g. "+18005551234") */
+    fromNumber: string;
+  };
+  /**
+   * Resend configuration for email confirmations to barbers and customers.
+   * Set RESEND_API_KEY in .env.local. Also set the verified "from" domain/address.
+   */
+  resend?: {
+    /** Verified sender address (e.g. "bookings@yourdomain.com") */
+    fromAddress: string;
+    /** Display name shown in the From field (e.g. "Elite Barber Studio") */
+    fromName: string;
+  };
+};
+
 export type ShopConfig = {
   slug: string;
   shopName: string;
@@ -99,6 +154,8 @@ export type ShopConfig = {
   gallery: string[];
   booking: BookingSettings;
   content: ContentLabels;
+  /** Optional notification settings — configure to enable SMS and email on booking */
+  notifications?: NotificationConfig;
 };
 
 export type ShopTemplateConfig = {
