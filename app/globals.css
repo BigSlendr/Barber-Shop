@@ -9,9 +9,57 @@
   --brand-accent: #d4af37;
   --brand-muted: #a1a1aa;
   --brand-shadow-card: 0 12px 30px rgba(0,0,0,0.25);
+  --brand-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --font-body: "Inter", "SF Pro Text", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Manrope", "Avenir Next", "Inter", "Segoe UI", sans-serif;
 }
 
 body {
+  min-height: 100vh;
   background: var(--brand-background);
   color: var(--brand-text);
+  font-feature-settings: "ss01" 1;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight text-balance font-[var(--font-display)];
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-brand-surface/90 shadow-card backdrop-blur;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/10 bg-brand-surface p-6 shadow-card transition duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_18px_40px_rgba(0,0,0,0.35)];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-brand-accent px-6 py-3 text-sm font-semibold text-black transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-background;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-brand-text transition hover:border-white/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-background;
+  }
+
+  .field-label {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-muted;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-white/15 bg-brand-background px-3.5 py-2.5 text-sm text-brand-text placeholder:text-brand-muted focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent;
+  }
 }
