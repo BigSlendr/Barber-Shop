@@ -18,7 +18,7 @@ const config: Config = {
         }
       },
       boxShadow: {
-        card: "0 12px 30px rgba(0,0,0,0.25)"
+        card: "var(--brand-shadow-card)"
       }
     }
   },
