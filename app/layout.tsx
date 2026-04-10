@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content={masterShopConfig.themeTokens.colors.background} />
+      </head>
       <body style={{
           "--brand-background": masterShopConfig.themeTokens.colors.background,
           "--brand-surface": masterShopConfig.themeTokens.colors.surface,
@@ -27,7 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           "--brand-accent": masterShopConfig.themeTokens.colors.accent,
           "--brand-muted": masterShopConfig.themeTokens.colors.muted,
           "--brand-shadow-card": masterShopConfig.themeTokens.effects.cardShadow
-        } as CSSProperties}>
+        } as CSSProperties} className="bg-brand-background font-[var(--font-body)] antialiased">
+        <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(212,175,55,0.15),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.08),transparent_30%)]" />
         <script
           type="application/ld+json"
           suppressHydrationWarning
@@ -48,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <Navbar />
-        <main className="mx-auto max-w-6xl space-y-20 px-4 py-8">{children}</main>
+        <main className="mx-auto max-w-6xl space-y-24 px-4 pb-24 pt-8 md:px-6">{children}</main>
         <Footer />
         <MobileStickyCTA />
       </body>

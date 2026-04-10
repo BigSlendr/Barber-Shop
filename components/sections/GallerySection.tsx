@@ -7,9 +7,9 @@ export function GallerySection({ preview = false }: { preview?: boolean }) {
   return (
     <section>
       <SectionHeader eyebrow="Gallery" title="Recent work" />
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-3">
         {images.map((image, idx) => (
-          <div key={image} className="h-52 rounded-2xl border border-white/10 bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} aria-label={`Gallery ${idx + 1}`} />
+          <div key={image} className="h-60 rounded-2xl border border-white/10 bg-cover bg-center shadow-card transition duration-300 hover:scale-[1.01] hover:border-white/20" style={{ backgroundImage: `url(${image})` }} aria-label={`Gallery ${idx + 1}`} />
         ))}
       </div>
     </section>
