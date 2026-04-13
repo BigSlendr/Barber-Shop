@@ -7,6 +7,7 @@ import { Footer } from "@/components/ui/Footer";
 import { MobileStickyCTA } from "@/components/ui/MobileStickyCTA";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com"),
   title: `${activeShop.shopName} | ${activeShop.city} Barbershop`,
   description: activeShop.tagline,
   openGraph: {
