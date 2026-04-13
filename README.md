@@ -16,8 +16,8 @@ Pre-configured for **Elite Barber Studio** — 2025 Richmond Ave, Staten Island,
 | **Portfolio gallery** | Upload work photos per barber — displayed as a responsive grid on their profile page. |
 | **Booking flow** | 5-step booking form: choose barber → service → date → time → contact details. |
 | **URL pre-selection** | Linking to `/book?barber=barber-1` pre-selects that barber in the booking form. |
-| **SMS notifications** | Twilio sends the barber an SMS the moment a customer books with them. |
-| **Email confirmations** | Resend sends HTML confirmation emails to both the customer and the barber. |
+| **Static-safe booking** | Booking form works on static hosting and can be connected to your preferred backend later. |
+| **GitHub Pages ready** | Configured for static export with base path support (`/Barber-Shop`). |
 | **Config-driven** | All shop data (name, hours, services, barbers, colors) lives in one file: `config/master-shop.ts`. |
 | **Multi-shop ready** | Designed to support multiple shops from a single codebase via `NEXT_PUBLIC_SHOP_SLUG`. |
 | **Supabase-ready** | Schema migrations included for persistent appointment storage. |
@@ -136,40 +136,11 @@ Edit `public/manifest.webmanifest` — update `name`, `short_name`, `description
 
 ---
 
-## Notification System
+## Booking Integrations
 
-### SMS (Twilio)
+This repository is static-hosting-first. The booking UI is fully usable on GitHub Pages and displays a confirmation state in-browser.
 
-When a customer completes a booking, the API automatically sends an SMS to the barber's phone number (set in `config/master-shop.ts` under `barber.phone`).
-
-**SMS message format:**
-```
-New booking at Elite Barber Studio!
-Client: John Smith (555-123-4567)
-Service: Skin Fade (50 min)
-When: Saturday, April 12, 2026 at 2:30 PM
-Booking ID: A1B2C3D4
-```
-
-**Setup:**
-1. Create a Twilio account at [twilio.com](https://twilio.com)
-2. Purchase a phone number
-3. Set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` in `.env.local`
-4. Add each barber's `phone` field in `config/master-shop.ts`
-
-### Email (Resend)
-
-Two HTML emails are sent on each booking:
-
-- **Customer confirmation** — booking summary with date, time, barber, service, and location
-- **Barber notification** — client details and appointment summary
-
-**Setup:**
-1. Create a Resend account at [resend.com](https://resend.com) (free: 3,000 emails/month)
-2. Verify your sending domain
-3. Set `RESEND_API_KEY` and `RESEND_FROM_ADDRESS` in `.env.local`
-
-> Both SMS and email are optional. If env vars are not set, notifications are skipped gracefully — the booking still confirms successfully.
+If you need real appointment persistence and notifications (Twilio/Resend), connect the form to an external backend service or serverless function for your deployment target.
 
 ---
 
@@ -191,8 +162,6 @@ app/
     services/         <- Services page
     gallery/          <- Gallery page
     contact/          <- Contact page
-  api/
-    book/route.ts     <- Booking API (validates, fires SMS + email, returns bookingId)
   offline/page.tsx    <- PWA offline fallback
 
 components/
@@ -257,6 +226,28 @@ Any platform that supports Next.js 15 will work (Netlify, Railway, Render, etc.)
 
 ---
 
+
+## GitHub Pages (Static Export)
+
+This template is now configured for **static-only hosting** (no server runtime required):
+
+- `next.config.ts` uses `output: "export"`, `trailingSlash: true`, and a GitHub Pages base path.
+- The default production base path is `/Barber-Shop` (override with `NEXT_PUBLIC_BASE_PATH`).
+- `next/image` runs in unoptimized mode for static export compatibility.
+- The booking page works fully on static hosting and no longer depends on `/api/book`.
+
+### Deploying on GitHub Pages
+
+1. Enable **GitHub Pages** in your repo settings (Source: **GitHub Actions**).
+2. Ensure your default branch is `main` (or update `github/workflows/deploy.yml`).
+3. Push to `main` to trigger deployment.
+4. For forks/rebrands, set `NEXT_PUBLIC_BASE_PATH` to your repo path (example: `/my-barbershop`).
+
+### Static booking behavior
+
+On static hosting, the booking form provides a working front-end flow and confirmation state without a server endpoint. For production client projects, connect submission to your preferred external booking backend/SaaS.
+
+---
 ## PWA Notes
 
 - The service worker is generated automatically by `next-pwa` in production builds.
